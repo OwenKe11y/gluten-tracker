@@ -1,7 +1,7 @@
 import { type FunctionComponent } from "react";
 
 import { Box } from "@mui/material";
-import ReceiptsDataGrid from "../components/ReceiptsDataGrid";
+import ReceiptsDataGrid from "../components/ReceiptsDataGrid/ReceiptsDataGrid";
 
 const ReceiptsPage: FunctionComponent = () => {
   return (

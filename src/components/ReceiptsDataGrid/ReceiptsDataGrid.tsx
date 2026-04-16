@@ -1,7 +1,15 @@
-import { DataGrid, type GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  type GridColDef,
+  type GridRenderCellParams,
+} from "@mui/x-data-grid";
 import type { FunctionComponent } from "react";
-import { useReceipts } from "../hooks/useReceipt";
-import type { ReceiptItems } from "../types/receipts";
+import { useReceipts } from "../../hooks/useReceipt";
+import type { ReceiptItems } from "../../types/receipts";
+import { Box } from "@mui/material";
+import ReceiptItemsCell from "./ReceiptItemCell";
+
+// Extract into a separate component for better organization
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90, align: "left" },
@@ -11,69 +19,67 @@ const columns: GridColDef[] = [
     flex: 1,
     align: "left",
     headerAlign: "left",
-    editable: true,
   },
-
   {
     field: "items",
     headerName: "Items",
-    type: "number",
-    flex: 1,
+    flex: 0.8,
     align: "left",
     headerAlign: "left",
-    editable: true,
-    // valueGetter: (params) => params.row.item.amount,
+    sortable: false,
+    renderCell: (params: GridRenderCellParams<any, ReceiptItems[]>) => (
+      <ReceiptItemsCell items={params.value || []} />
+    ),
   },
   {
     field: "store",
     headerName: "Store",
-    type: "string",
     flex: 1,
     align: "left",
     headerAlign: "left",
-    editable: true,
   },
   {
     field: "location",
     headerName: "Location",
-    type: "string",
     flex: 1,
     align: "left",
     headerAlign: "left",
-    editable: true,
   },
   {
     field: "gluten_total",
     headerName: "Gluten Total",
     type: "number",
-    flex: 1,
+    flex: 0.8,
     align: "left",
     headerAlign: "left",
-    editable: true,
   },
   {
     field: "receipt_total",
     headerName: "Receipt Total",
     type: "number",
-    flex: 1,
+    flex: 0.8,
     align: "left",
     headerAlign: "left",
-    editable: true,
   },
 ];
+
 const ReceiptsDataGrid: FunctionComponent = () => {
   const { receipts } = useReceipts();
+
   return (
-    <DataGrid
-      columns={columns}
-      rows={receipts}
-      pageSizeOptions={[10]}
-      initialState={{
-        pagination: {
-          paginationModel: { pageSize: 10, page: 0 },
-        },
-      }}
-    />
+    <Box sx={{ height: "100%", width: "100%" }}>
+      <DataGrid
+        columns={columns}
+        rows={receipts}
+        pageSizeOptions={[10]}
+        initialState={{
+          pagination: {
+            paginationModel: { pageSize: 10, page: 0 },
+          },
+        }}
+        disableColumnMenu
+      />
+    </Box>
   );
 };
 
