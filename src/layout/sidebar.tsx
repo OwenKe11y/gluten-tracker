@@ -5,7 +5,7 @@ import { headerHeight } from "./constants";
 const Sidebar = () => (
   <Box
     sx={{
-      position: "fixed",
+      position: "relative",
       top: headerHeight,
       height: `calc(100vh - ${headerHeight}px)`,
       backgroundColor: "background.paper",

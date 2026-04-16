@@ -11,4 +11,5 @@ export interface Receipts {
   location: string;
   gluten_total: number;
   receipt_total: number;
+  image_link: string;
 }

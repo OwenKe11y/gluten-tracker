@@ -61,15 +61,43 @@ const columns: GridColDef[] = [
     align: "left",
     headerAlign: "left",
   },
+  {
+    field: "image_link",
+    headerName: "Scan Link",
+    type: "string",
+    flex: 0.8,
+    align: "left",
+    headerAlign: "left",
+    renderCell: (params: GridRenderCellParams<any, string>) =>
+      params.value ? (
+        <a
+          href={params.value}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "var(--accent)", textDecoration: "none" }}
+        >
+          View PDF
+        </a>
+      ) : (
+        <span style={{ color: "var(--text)" }}>No scan</span>
+      ),
+  },
 ];
 
 const ReceiptsDataGrid: FunctionComponent = () => {
-  const { receipts } = useReceipts();
+  const { receipts, receiptsLoading } = useReceipts();
 
   return (
     <Box sx={{ height: "100%", width: "100%" }}>
       <DataGrid
         columns={columns}
+        loading={receiptsLoading}
+        slotProps={{
+          loadingOverlay: {
+            variant: "circular-progress",
+            noRowsVariant: "circular-progress",
+          },
+        }}
         rows={receipts}
         pageSizeOptions={[10]}
         initialState={{
