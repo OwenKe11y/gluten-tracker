@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
+import { Outlet } from "@tanstack/react-router";
 import type { FunctionComponent } from "react";
 import { contentHeight } from "./constants";
-import { Outlet } from "@tanstack/react-router";
 
 const Content: FunctionComponent = () => {
   return (
