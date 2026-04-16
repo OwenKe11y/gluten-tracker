@@ -4,10 +4,10 @@ import {
   type GridRenderCellParams,
 } from "@mui/x-data-grid";
 import type { FunctionComponent } from "react";
-import { useReceipts } from "../../hooks/useReceipt";
 import type { ReceiptItems } from "../../types/receipts";
 import { Box } from "@mui/material";
 import ReceiptItemsCell from "./ReceiptItemCell";
+import { useReceiptsContext } from "../../contexts/ReceiptsContext";
 
 // Extract into a separate component for better organization
 
@@ -85,7 +85,7 @@ const columns: GridColDef[] = [
 ];
 
 const ReceiptsDataGrid: FunctionComponent = () => {
-  const { receipts, receiptsLoading } = useReceipts();
+  const { receipts, receiptsLoading } = useReceiptsContext();
 
   return (
     <Box sx={{ height: "100%", width: "100%" }}>

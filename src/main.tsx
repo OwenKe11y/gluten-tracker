@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import "./index.css";
 import { ThemeProvider, createTheme } from "@mui/material";
+import { ReceiptsProvider } from "./contexts/ReceiptsContext";
 
 const router = createRouter({ routeTree });
 
@@ -24,7 +25,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <ThemeProvider theme={darkTheme}>
-        <RouterProvider router={router} />
+        <ReceiptsProvider>
+          <RouterProvider router={router} />
+        </ReceiptsProvider>
       </ThemeProvider>
     </StrictMode>,
   );
