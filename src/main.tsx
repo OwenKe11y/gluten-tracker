@@ -5,6 +5,8 @@ import { routeTree } from "./routeTree.gen";
 import "./index.css";
 import { ThemeProvider, createTheme } from "@mui/material";
 import { ReceiptsProvider } from "./contexts/ReceiptsContext";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const router = createRouter({ routeTree });
 
@@ -25,9 +27,11 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <ThemeProvider theme={darkTheme}>
-        <ReceiptsProvider>
-          <RouterProvider router={router} />
-        </ReceiptsProvider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <ReceiptsProvider>
+            <RouterProvider router={router} />
+          </ReceiptsProvider>
+        </LocalizationProvider>
       </ThemeProvider>
     </StrictMode>,
   );

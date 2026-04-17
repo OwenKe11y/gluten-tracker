@@ -10,17 +10,13 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ScansRouteImport } from './routes/scans'
-import { Route as ReceiptsRouteImport } from './routes/receipts'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ReceiptsIndexRouteImport } from './routes/receipts.index'
+import { Route as ReceiptsCreateRouteImport } from './routes/receipts/create'
 
 const ScansRoute = ScansRouteImport.update({
   id: '/scans',
   path: '/scans',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReceiptsRoute = ReceiptsRouteImport.update({
-  id: '/receipts',
-  path: '/receipts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -28,35 +24,49 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReceiptsIndexRoute = ReceiptsIndexRouteImport.update({
+  id: '/receipts/',
+  path: '/receipts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReceiptsCreateRoute = ReceiptsCreateRouteImport.update({
+  id: '/receipts/create',
+  path: '/receipts/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
-  '/receipts': typeof ReceiptsRoute
   '/scans': typeof ScansRoute
+  '/receipts/create': typeof ReceiptsCreateRoute
+  '/receipts/': typeof ReceiptsIndexRoute
 }
 export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
-  '/receipts': typeof ReceiptsRoute
   '/scans': typeof ScansRoute
+  '/receipts/create': typeof ReceiptsCreateRoute
+  '/receipts': typeof ReceiptsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/dashboard': typeof DashboardRoute
-  '/receipts': typeof ReceiptsRoute
   '/scans': typeof ScansRoute
+  '/receipts/create': typeof ReceiptsCreateRoute
+  '/receipts/': typeof ReceiptsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/dashboard' | '/receipts' | '/scans'
+  fullPaths: '/dashboard' | '/scans' | '/receipts/create' | '/receipts/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/dashboard' | '/receipts' | '/scans'
-  id: '__root__' | '/dashboard' | '/receipts' | '/scans'
+  to: '/dashboard' | '/scans' | '/receipts/create' | '/receipts'
+  id: '__root__' | '/dashboard' | '/scans' | '/receipts/create' | '/receipts/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
-  ReceiptsRoute: typeof ReceiptsRoute
   ScansRoute: typeof ScansRoute
+  ReceiptsCreateRoute: typeof ReceiptsCreateRoute
+  ReceiptsIndexRoute: typeof ReceiptsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -68,13 +78,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScansRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/receipts': {
-      id: '/receipts'
-      path: '/receipts'
-      fullPath: '/receipts'
-      preLoaderRoute: typeof ReceiptsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -82,13 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/receipts/': {
+      id: '/receipts/'
+      path: '/receipts'
+      fullPath: '/receipts/'
+      preLoaderRoute: typeof ReceiptsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/receipts/create': {
+      id: '/receipts/create'
+      path: '/receipts/create'
+      fullPath: '/receipts/create'
+      preLoaderRoute: typeof ReceiptsCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
-  ReceiptsRoute: ReceiptsRoute,
   ScansRoute: ScansRoute,
+  ReceiptsCreateRoute: ReceiptsCreateRoute,
+  ReceiptsIndexRoute: ReceiptsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -14,7 +14,7 @@ const Content: FunctionComponent = () => {
   return (
     <Container sx={{ marginTop: `${contentHeight}px` }} maxWidth="xl">
       <Grid container spacing={3} size={12}>
-        <Grid size={12}>
+        <Grid size={6}>
           <Typography variant="h3">{routeName}</Typography>
         </Grid>
         <Grid size={12}>

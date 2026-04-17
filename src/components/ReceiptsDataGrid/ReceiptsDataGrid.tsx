@@ -5,11 +5,10 @@ import {
 } from "@mui/x-data-grid";
 import type { FunctionComponent } from "react";
 import type { ReceiptItems } from "../../types/receipts";
-import { Box } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import ReceiptItemsCell from "./ReceiptItemCell";
 import { useReceiptsContext } from "../../contexts/ReceiptsContext";
-
-// Extract into a separate component for better organization
+import { useNavigate } from "@tanstack/react-router";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90, align: "left" },
@@ -86,28 +85,39 @@ const columns: GridColDef[] = [
 
 const ReceiptsDataGrid: FunctionComponent = () => {
   const { receipts, receiptsLoading } = useReceiptsContext();
+  const navigate = useNavigate();
 
   return (
-    <Box sx={{ height: "100%", width: "100%" }}>
-      <DataGrid
-        columns={columns}
-        loading={receiptsLoading}
-        slotProps={{
-          loadingOverlay: {
-            variant: "circular-progress",
-            noRowsVariant: "circular-progress",
-          },
-        }}
-        rows={receipts}
-        pageSizeOptions={[10]}
-        initialState={{
-          pagination: {
-            paginationModel: { pageSize: 10, page: 0 },
-          },
-        }}
-        disableColumnMenu
-      />
-    </Box>
+    <>
+      <Grid size={12} sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+          variant="contained"
+          onClick={() => navigate({ to: "/receipts/create" })}
+        >
+          <Typography>Add Receipt</Typography>
+        </Button>
+      </Grid>
+      <Box sx={{ height: "100%", width: "100%" }}>
+        <DataGrid
+          columns={columns}
+          loading={receiptsLoading}
+          slotProps={{
+            loadingOverlay: {
+              variant: "circular-progress",
+              noRowsVariant: "circular-progress",
+            },
+          }}
+          rows={receipts}
+          pageSizeOptions={[10]}
+          initialState={{
+            pagination: {
+              paginationModel: { pageSize: 10, page: 0 },
+            },
+          }}
+          disableColumnMenu
+        />
+      </Box>
+    </>
   );
 };
 
