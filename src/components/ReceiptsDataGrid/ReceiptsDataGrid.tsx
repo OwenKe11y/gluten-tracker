@@ -9,6 +9,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import ReceiptItemsCell from "./ReceiptItemCell";
 import { useReceiptsContext } from "../../contexts/ReceiptsContext";
 import { useNavigate } from "@tanstack/react-router";
+import DeleteButton from "../Buttons/DeleteButton";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90, align: "left" },
@@ -80,6 +81,15 @@ const columns: GridColDef[] = [
       ) : (
         <span style={{ color: "var(--text)" }}>No scan</span>
       ),
+  },
+  {
+    field: "actions",
+    headerName: "Actions",
+    type: "actions",
+    align: "center",
+    headerAlign: "center",
+    width: 80,
+    renderCell: (params) => <DeleteButton id={params.row.id} />,
   },
 ];
 

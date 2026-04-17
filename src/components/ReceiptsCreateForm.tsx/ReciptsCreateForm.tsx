@@ -3,7 +3,6 @@ import {
   Box,
   TextField,
   Button,
-  Typography,
   IconButton,
   Grid,
 } from "@mui/material";
@@ -16,10 +15,23 @@ import { supabase } from "../../supabase/client"; // Adjust the import path as n
 import type { ReceiptItems } from "../../types/receipts";
 import dayjs, { Dayjs } from "dayjs";
 import { useReceiptsContext } from "../../contexts/ReceiptsContext";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 interface ReceiptsCreateFormProps {
   onSuccess?: () => void;
 }
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 const FormGrid = styled(Grid)(() => ({
   display: "flex",
@@ -30,6 +42,7 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
   onSuccess,
 }) => {
   const { refreshReceipts } = useReceiptsContext();
+  const [getImageFile, setImageFile] = useState([]);
   const [formData, setFormData] = useState({
     date: dayjs(),
     items: [{ name: "", amount: 1 }] as ReceiptItems[],
@@ -147,9 +160,6 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
         </FormGrid>
 
         <FormGrid size={12}>
-          <Typography variant="subtitle1" gutterBottom>
-            Items
-          </Typography>
           {formData.items.map((item, index) => (
             <Box
               key={index}
@@ -243,6 +253,22 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
           />
         </FormGrid>
 
+        <Button
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+          startIcon={<CloudUploadIcon />}
+        >
+          Upload files
+          <VisuallyHiddenInput
+            type="file"
+            onChange={(event) => {
+              console.log(event.target.files);
+            }}
+            multiple
+          />
+        </Button>
         <Grid
           size={12}
           sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}
