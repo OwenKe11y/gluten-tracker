@@ -5,6 +5,7 @@ import {
   Button,
   IconButton,
   Grid,
+  Typography,
 } from "@mui/material";
 import type { FunctionComponent } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -42,7 +43,10 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
   onSuccess,
 }) => {
   const { refreshReceipts } = useReceiptsContext();
-  const [getImageFile, setImageFile] = useState([]);
+  // Update the state interface
+  const [getImageFile, setImageFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+
   const [formData, setFormData] = useState({
     date: dayjs(),
     items: [{ name: "", amount: 1 }] as ReceiptItems[],
@@ -73,6 +77,44 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
         date: date,
       }));
     }
+  };
+
+  const handleFileUpload = async (file: File) => {
+    if (!file) return null;
+
+    setUploading(true);
+
+    // Generate the filename using store and date from form data
+    const storeName = formData.store.replace(/\s+/g, "_").toLowerCase();
+    const dateStr = formData.date.format("YYYY-MM-DD");
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${storeName}_${dateStr}.${fileExt}`;
+    setImageFile({
+      ...file,
+      name: fileName,
+    });
+
+    // Upload to Supabase Storage
+    const { error } = await supabase.storage
+      .from("scans") // Your bucket name
+      .upload(`public/${fileName}`, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (error) {
+      console.error("Error uploading file:", error);
+      setUploading(false);
+      return null;
+    }
+
+    // Get the public URL of the uploaded file
+    const { data: urlData } = supabase.storage
+      .from("scans")
+      .getPublicUrl(`public/${fileName}`);
+
+    setUploading(false);
+    return urlData.publicUrl;
   };
 
   const handleItemChange = (
@@ -108,6 +150,14 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
         items: updatedItems,
       }));
     }
+  };
+
+  const areAllFieldsFilled = () => {
+    return (
+      formData.store &&
+      formData.location &&
+      formData.items.every((item) => item.name.trim())
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -259,16 +309,28 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
           variant="contained"
           tabIndex={-1}
           startIcon={<CloudUploadIcon />}
+          disabled={uploading || !areAllFieldsFilled()}
         >
-          Upload files
+          {uploading ? "Uploading..." : "Upload Receipt Scan"}
           <VisuallyHiddenInput
             type="file"
-            onChange={(event) => {
-              console.log(event.target.files);
+            accept=".pdf"
+            onChange={async (event) => {
+              const file = event.target.files?.[0];
+              if (file) {
+                setImageFile(file);
+                const imageUrl = await handleFileUpload(file);
+                if (imageUrl) {
+                  setFormData((prev) => ({
+                    ...prev,
+                    image_link: imageUrl,
+                  }));
+                }
+              }
             }}
-            multiple
           />
         </Button>
+        <Typography>{getImageFile?.name}</Typography>
         <Grid
           size={12}
           sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}
