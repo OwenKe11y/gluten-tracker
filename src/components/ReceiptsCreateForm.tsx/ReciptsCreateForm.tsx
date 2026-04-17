@@ -97,7 +97,7 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
     // Upload to Supabase Storage
     const { error } = await supabase.storage
       .from("scans") // Your bucket name
-      .upload(`public/${fileName}`, file, {
+      .upload(`${fileName}`, file, {
         cacheControl: "3600",
         upsert: true,
       });
