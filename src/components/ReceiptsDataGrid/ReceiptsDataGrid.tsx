@@ -1,15 +1,15 @@
+import { Box, Button, Grid, Typography } from "@mui/material";
 import {
   DataGrid,
   type GridColDef,
   type GridRenderCellParams,
 } from "@mui/x-data-grid";
-import type { FunctionComponent } from "react";
-import type { ReceiptItems } from "../../types/receipts";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import ReceiptItemsCell from "./ReceiptItemCell";
-import { useReceiptsContext } from "../../contexts/ReceiptsContext";
 import { useNavigate } from "@tanstack/react-router";
+import type { FunctionComponent } from "react";
+import { useReceiptsContext } from "../../contexts/ReceiptsContext";
+import type { ReceiptItems } from "../../types/receipts";
 import DeleteButton from "../Buttons/DeleteButton";
+import ReceiptItemsCell from "./ReceiptItemCell";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90, align: "left" },
@@ -68,6 +68,7 @@ const columns: GridColDef[] = [
     flex: 0.8,
     align: "left",
     headerAlign: "left",
+    sortable: false,
     renderCell: (params: GridRenderCellParams<any, string>) =>
       params.value ? (
         <a

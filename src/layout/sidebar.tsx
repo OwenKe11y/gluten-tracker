@@ -1,18 +1,19 @@
-import { Link as RouterLink } from "@tanstack/react-router";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import {
+  Box,
   Drawer,
   List,
   ListItem,
   ListItemButton,
-  ListItemText,
-  Box,
   ListItemIcon,
+  ListItemText,
 } from "@mui/material";
+import { Link as RouterLink } from "@tanstack/react-router";
 import { headerHeight } from "./constants";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
-import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
 
+import LinkIcon from "@mui/icons-material/Link";
 const Sidebar = () => {
   return (
     <Drawer
@@ -54,6 +55,19 @@ const Sidebar = () => {
                 <DocumentScannerIcon />
               </ListItemIcon>
               <ListItemText primary="Scans" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              component="a"
+              href="https://www.revenue.ie/en/home.aspx"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ListItemIcon>
+                <LinkIcon />
+              </ListItemIcon>
+              <ListItemText primary="Revenue" />
             </ListItemButton>
           </ListItem>
         </List>
