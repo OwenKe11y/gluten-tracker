@@ -14,9 +14,11 @@ import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import { supabase } from "../../supabase/client"; // Adjust the import path as needed
 import type { ReceiptItems } from "../../types/receipts";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { useReceiptsContext } from "../../contexts/ReceiptsContext";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import type { ReceiptFormState } from "./types";
+import { INITIAL_FORM_STATE } from "./constants";
 
 interface ReceiptsCreateFormProps {
   onSuccess?: () => void;
@@ -43,18 +45,10 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
   onSuccess,
 }) => {
   const { refreshReceipts } = useReceiptsContext();
-  // Update the state interface
   const [getImageFile, setImageFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
-
-  const [formData, setFormData] = useState({
-    date: dayjs(),
-    items: [{ name: "", amount: 1 }] as ReceiptItems[],
-    store: "",
-    location: "",
-    gluten_total: "" as unknown as any as number,
-    receipt_total: "" as unknown as any as number,
-  });
+  const [formData, setFormData] =
+    useState<ReceiptFormState>(INITIAL_FORM_STATE);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -89,10 +83,8 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
     const dateStr = formData.date.format("YYYY-MM-DD");
     const fileExt = file.name.split(".").pop();
     const fileName = `${storeName}_${dateStr}.${fileExt}`;
-    setImageFile({
-      ...file,
-      name: fileName,
-    });
+    const renamedFile = new File([file], fileName, { type: file.type });
+    setImageFile(renamedFile);
 
     // Upload to Supabase Storage
     const { error } = await supabase.storage
@@ -111,7 +103,7 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
     // Get the public URL of the uploaded file
     const { data: urlData } = supabase.storage
       .from("scans")
-      .getPublicUrl(`public/${fileName}`);
+      .getPublicUrl(`${fileName}`);
 
     setUploading(false);
     return urlData.publicUrl;
@@ -174,14 +166,7 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
 
       await refreshReceipts();
       // Reset form
-      setFormData({
-        date: dayjs(), // Reset to dayjs object
-        items: [{ name: "", amount: 1 }],
-        store: "",
-        location: "",
-        gluten_total: "" as unknown as any as number,
-        receipt_total: "" as unknown as any as number,
-      });
+      setFormData(INITIAL_FORM_STATE);
 
       if (onSuccess) onSuccess();
     } catch (error) {
@@ -197,6 +182,7 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
         backgroundColor: "#121212",
         border: "1px solid rgba(255, 255, 255, 0.12)",
         padding: "24px",
+        borderRadius: "12px",
       }}
     >
       <Grid container spacing={3}>

@@ -32,6 +32,7 @@ const ScansPage: FunctionComponent = () => {
           ))
         : receipts.map((receipt, index) => {
             const fileName = getFileNameFromUrl(receipt.image_link);
+            console.log(receipt.image_link);
             return (
               <Grid size={3} key={index}>
                 <Card
