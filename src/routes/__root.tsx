@@ -1,8 +1,8 @@
-import { createRootRoute, redirect } from "@tanstack/react-router";
-import Sidebar from "../layout/sidebar";
-import Header from "../layout/header";
-import Content from "../layout/content";
 import { Grid } from "@mui/material";
+import { createRootRoute, redirect } from "@tanstack/react-router";
+import Content from "../layout/content";
+import Header from "../layout/header";
+import Sidebar from "../layout/sidebar";
 
 const RootLayout = () => (
   <Grid container>

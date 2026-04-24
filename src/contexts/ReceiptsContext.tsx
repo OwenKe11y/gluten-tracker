@@ -1,4 +1,6 @@
 // contexts/ReceiptsContext.tsx
+import { supabase } from "@/src/supabase/client";
+import type { Receipts } from "@/src/types/receipts";
 import {
   createContext,
   useContext,
@@ -7,8 +9,6 @@ import {
   type FunctionComponent,
   type ReactNode,
 } from "react";
-import { supabase } from "../supabase/client";
-import type { Receipts } from "../types/receipts";
 
 interface ReceiptsContextType {
   receipts: Receipts[];

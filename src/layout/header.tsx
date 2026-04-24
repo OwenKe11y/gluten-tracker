@@ -1,6 +1,6 @@
-import { styled } from "@mui/material/styles";
+import { headerHeight } from "@/src/types/constants";
 import { AppBar, Toolbar, Typography } from "@mui/material";
-import { headerHeight } from "./constants";
+import { styled } from "@mui/material/styles";
 
 const StyledAppBar = styled(AppBar)({
   top: 0,

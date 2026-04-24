@@ -11,8 +11,8 @@ import {
   ListItemText,
 } from "@mui/material";
 import { Link as RouterLink } from "@tanstack/react-router";
-import { headerHeight } from "./constants";
 
+import { headerHeight } from "@/src/types/constants";
 import LinkIcon from "@mui/icons-material/Link";
 const Sidebar = () => {
   return (

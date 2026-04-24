@@ -1,3 +1,7 @@
+import DeleteButton from "@/src/components/Buttons/DeleteButton";
+import ReceiptItemsCell from "@/src/components/ReceiptsDataGrid/ReceiptItemCell";
+import { useReceiptsContext } from "@/src/contexts/ReceiptsContext";
+import type { ReceiptItems } from "@/src/types/receipts";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import {
   DataGrid,
@@ -6,10 +10,6 @@ import {
 } from "@mui/x-data-grid";
 import { useNavigate } from "@tanstack/react-router";
 import type { FunctionComponent } from "react";
-import { useReceiptsContext } from "../../contexts/ReceiptsContext";
-import type { ReceiptItems } from "../../types/receipts";
-import DeleteButton from "../Buttons/DeleteButton";
-import ReceiptItemsCell from "./ReceiptItemCell";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 90, align: "left" },

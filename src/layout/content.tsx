@@ -1,7 +1,7 @@
+import { contentHeight } from "@/src/types/constants";
 import { Container, Grid, Typography } from "@mui/material";
 import { Outlet, useLocation } from "@tanstack/react-router";
 import type { FunctionComponent } from "react";
-import { contentHeight } from "./constants";
 
 const getRouteName = (pathname: string): string => {
   const name = pathname.split("/").filter(Boolean)[0] || "Dashboard";

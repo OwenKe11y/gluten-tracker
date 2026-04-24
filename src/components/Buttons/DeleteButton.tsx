@@ -1,8 +1,8 @@
+import { useReceiptsContext } from "@/src/contexts/ReceiptsContext";
+import { supabase } from "@/src/supabase/client";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton } from "@mui/material";
 import type { FunctionComponent } from "react";
-import { useReceiptsContext } from "../../contexts/ReceiptsContext";
-import { supabase } from "../../supabase/client";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 interface DeleteButtonProps {
   id: number;

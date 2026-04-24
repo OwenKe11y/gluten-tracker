@@ -1,24 +1,24 @@
+import type { ReceiptFormState } from "@/src/components/ReceiptsCreateForm.tsx/types";
+import { supabase } from "@/src/supabase/client";
+import { INITIAL_FORM_STATE } from "@/src/types/constants";
+import type { ReceiptItems } from "@/src/types/receipts";
+import AddIcon from "@mui/icons-material/Add";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
-  styled,
   Box,
-  TextField,
   Button,
-  IconButton,
   Grid,
+  IconButton,
+  styled,
+  TextField,
   Typography,
 } from "@mui/material";
-import type { FunctionComponent } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
-import { supabase } from "../../supabase/client"; // Adjust the import path as needed
-import type { ReceiptItems } from "../../types/receipts";
 import { Dayjs } from "dayjs";
+import type { FunctionComponent } from "react";
+import { useState } from "react";
 import { useReceiptsContext } from "../../contexts/ReceiptsContext";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import type { ReceiptFormState } from "./types";
-import { INITIAL_FORM_STATE } from "./constants";
 
 interface ReceiptsCreateFormProps {
   onSuccess?: () => void;
@@ -77,8 +77,6 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
     if (!file) return null;
 
     setUploading(true);
-
-    // Generate the filename using store and date from form data
     const storeName = formData.store.replace(/\s+/g, "_").toLowerCase();
     const dateStr = formData.date.format("YYYY-MM-DD");
     const fileExt = file.name.split(".").pop();
@@ -86,9 +84,8 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
     const renamedFile = new File([file], fileName, { type: file.type });
     setImageFile(renamedFile);
 
-    // Upload to Supabase Storage
     const { error } = await supabase.storage
-      .from("scans") // Your bucket name
+      .from("scans")
       .upload(`${fileName}`, file, {
         cacheControl: "3600",
         upsert: true,

@@ -1,13 +1,13 @@
+import { useReceiptsContext } from "@/src/contexts/ReceiptsContext";
 import {
-  Grid,
   Card,
-  CardMedia,
   CardContent,
-  Typography,
+  CardMedia,
+  Grid,
   Skeleton,
+  Typography,
 } from "@mui/material";
 import type { FunctionComponent } from "react";
-import { useReceiptsContext } from "../contexts/ReceiptsContext";
 
 const ScansPage: FunctionComponent = () => {
   const { receipts, receiptsLoading } = useReceiptsContext();

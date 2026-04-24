@@ -1,16 +1,16 @@
+import type { ReceiptItems } from "@/src/types/receipts";
 import {
   Button,
   Dialog,
-  DialogTitle,
   DialogContent,
+  DialogTitle,
   Table,
+  TableBody,
+  TableCell,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
 } from "@mui/material";
 import { type FunctionComponent, useState } from "react";
-import type { ReceiptItems } from "../../types/receipts";
 
 const ReceiptItemsCell: FunctionComponent<{ items: ReceiptItems[] }> = ({
   items,
