@@ -1,4 +1,3 @@
-// contexts/ReceiptsContext.tsx
 import { supabase } from "@/src/supabase/client";
 import type { Receipts } from "@/src/types/receipts";
 import {
