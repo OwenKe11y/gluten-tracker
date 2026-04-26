@@ -1,4 +1,4 @@
-import type { ReceiptFormState } from "@/src/components/ReceiptsCreateForm.tsx/types";
+import type { ReceiptFormState } from "@/src/components/ReceiptsCreateForm/types";
 import { supabase } from "@/src/supabase/client";
 import { INITIAL_FORM_STATE } from "@/src/types/constants";
 import type { ReceiptItems } from "@/src/types/receipts";

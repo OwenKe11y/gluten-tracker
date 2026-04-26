@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import type { ReceiptFormState } from "../components/ReceiptsCreateForm.tsx/types";
+import type { ReceiptFormState } from "../components/ReceiptsCreateForm/types";
 
 export const headerHeight = 64;
 export const contentHeight = headerHeight + 24;
