@@ -1,6 +1,5 @@
-## **Summary**
 
-The Gluten Tracker application is designed to **automate and simplify** the process of tracking gluten-free purchases for individuals in Ireland. By centralizing data collection and analysis, the platform delivers:
+A small, lightweight web application designed to track receipt items containing gluten. By centralizing data collection and analysis, the platform delivers:
 
 - **Comprehensive spending insights**, including yearly expenses on general shopping and gluten-free products.
 - **Automated tax rebate calculations** for medical expenses, reducing manual effort and ensuring accuracy for Revenue.ie claims.
