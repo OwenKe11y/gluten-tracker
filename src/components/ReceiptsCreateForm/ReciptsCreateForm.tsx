@@ -183,137 +183,146 @@ const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
       }}
     >
       <Grid container spacing={3}>
-        <FormGrid size={12}>
-          <DatePicker
-            label="Date on Receipt"
-            value={formData.date}
-            onChange={handleDateChange}
-            slotProps={{ textField: { required: true } }}
-          />
-        </FormGrid>
+        {/* Form Grid Items */}
+        <Grid size={6}>
+          <Grid container spacing={3}>
+            <Grid size={6}>
+              <DatePicker
+                label="Date on Receipt"
+                value={formData.date}
+                onChange={handleDateChange}
+                slotProps={{ textField: { required: true } }}
+              />
+            </Grid>
 
-        <FormGrid size={12}>
-          {formData.items.map((item, index) => (
-            <Box
-              key={index}
-              sx={{ display: "flex", alignItems: "center", mb: 2 }}
-            >
-              <TextField
-                required
-                label="Item Name"
-                value={item.name}
-                onChange={(e) =>
-                  handleItemChange(index, "name", e.target.value)
-                }
-                sx={{ flexGrow: 1, mr: 1 }}
-              />
-              <TextField
-                required
-                label="Amount"
-                type="number"
-                value={item.amount}
-                onChange={(e) =>
-                  handleItemChange(index, "amount", e.target.value)
-                }
-                sx={{ width: 120, mr: 1 }}
-              />
-              <IconButton
-                onClick={() => removeItem(index)}
-                color="error"
-                disabled={formData.items.length <= 1} // Disable if only one item
+            <Grid size={12}>
+              {formData.items.map((item, index) => (
+                <Box
+                  key={index}
+                  sx={{ display: "flex", alignItems: "center", mb: 2 }}
+                >
+                  <TextField
+                    required
+                    label="Item Name"
+                    value={item.name}
+                    onChange={(e) =>
+                      handleItemChange(index, "name", e.target.value)
+                    }
+                    sx={{ flexGrow: 1, mr: 1 }}
+                  />
+                  <TextField
+                    required
+                    label="Amount"
+                    type="number"
+                    value={item.amount}
+                    onChange={(e) =>
+                      handleItemChange(index, "amount", e.target.value)
+                    }
+                    sx={{ width: 120, mr: 1 }}
+                  />
+                  <IconButton
+                    onClick={() => removeItem(index)}
+                    color="error"
+                    disabled={formData.items.length <= 1}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
+              ))}
+              <Button
+                startIcon={<AddIcon />}
+                onClick={addItem}
+                variant="outlined"
+                sx={{ mt: 1 }}
               >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-          ))}
+                Add Item
+              </Button>
+            </Grid>
+
+            <Grid size={6}>
+              <TextField
+                required
+                id="store"
+                label="Store"
+                placeholder="Store Name"
+                value={formData.store}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid size={6}>
+              <TextField
+                required
+                id="location"
+                label="Store Location"
+                placeholder="Location"
+                value={formData.location}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid size={6}>
+              <TextField
+                required
+                id="gluten_total"
+                label="Gluten Total"
+                placeholder="€0.00"
+                type="number"
+                value={formData.gluten_total}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
+
+            <Grid size={6}>
+              <TextField
+                required
+                id="receipt_total"
+                label="Receipt Total"
+                placeholder="€0.00"
+                type="number"
+                value={formData.receipt_total}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Grid>
+
+            <Typography>{getImageFile?.name}</Typography>
+          </Grid>
+        </Grid>
+
+        {/* Upload Button Grid Item */}
+        <Grid size={6} sx={{ display: "flex", alignItems: "center" }}>
           <Button
-            startIcon={<AddIcon />}
-            onClick={addItem}
-            variant="outlined"
-            sx={{ mt: 1 }}
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}
+            startIcon={<CloudUploadIcon />}
+            disabled={uploading || !areAllFieldsFilled()}
           >
-            Add Item
-          </Button>
-        </FormGrid>
-
-        <FormGrid size={12}>
-          <TextField
-            required
-            id="store"
-            label="Store"
-            placeholder="Store Name"
-            value={formData.store}
-            onChange={handleChange}
-            fullWidth
-          />
-        </FormGrid>
-
-        <FormGrid size={12}>
-          <TextField
-            required
-            id="location"
-            label="Store Location"
-            placeholder="Location"
-            value={formData.location}
-            onChange={handleChange}
-            fullWidth
-          />
-        </FormGrid>
-
-        <FormGrid size={12}>
-          <TextField
-            required
-            id="gluten_total"
-            label="Gluten Total"
-            placeholder="€0.00"
-            type="number"
-            value={formData.gluten_total}
-            onChange={handleChange}
-            fullWidth
-          />
-        </FormGrid>
-
-        <FormGrid size={12}>
-          <TextField
-            required
-            id="receipt_total"
-            label="Receipt Total"
-            placeholder="€0.00"
-            type="number"
-            value={formData.receipt_total}
-            onChange={handleChange}
-            fullWidth
-          />
-        </FormGrid>
-
-        <Button
-          component="label"
-          role={undefined}
-          variant="contained"
-          tabIndex={-1}
-          startIcon={<CloudUploadIcon />}
-          disabled={uploading || !areAllFieldsFilled()}
-        >
-          {uploading ? "Uploading..." : "Upload Receipt Scan"}
-          <VisuallyHiddenInput
-            type="file"
-            accept=".pdf"
-            onChange={async (event) => {
-              const file = event.target.files?.[0];
-              if (file) {
-                setImageFile(file);
-                const imageUrl = await handleFileUpload(file);
-                if (imageUrl) {
-                  setFormData((prev) => ({
-                    ...prev,
-                    image_link: imageUrl,
-                  }));
+            {uploading ? "Uploading..." : "Upload Receipt Scan"}
+            <VisuallyHiddenInput
+              type="file"
+              accept=".pdf"
+              onChange={async (event) => {
+                const file = event.target.files?.[0];
+                if (file) {
+                  setImageFile(file);
+                  const imageUrl = await handleFileUpload(file);
+                  if (imageUrl) {
+                    setFormData((prev) => ({
+                      ...prev,
+                      image_link: imageUrl,
+                    }));
+                  }
                 }
-              }
-            }}
-          />
-        </Button>
-        <Typography>{getImageFile?.name}</Typography>
+              }}
+            />
+          </Button>
+        </Grid>
         <Grid
           size={12}
           sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}
