@@ -1,73 +1,44 @@
-# React + TypeScript + Vite
+## **Summary**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The Gluten Tracker application is designed to **automate and simplify** the process of tracking gluten-free purchases for individuals in Ireland. By centralizing data collection and analysis, the platform delivers:
 
-Currently, two official plugins are available:
+- **Comprehensive spending insights**, including yearly expenses on general shopping and gluten-free products.
+- **Automated tax rebate calculations** for medical expenses, reducing manual effort and ensuring accuracy for Revenue.ie claims.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This solution enables users to **seamlessly monitor gluten-free expenditures** while optimizing financial returns through tax rebates.
 
-## React Compiler
+## **Problem Statement**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+In Ireland, individuals with Celiac Disease are eligible to claim gluten-free product purchases as medical expenses through Revenue.ie. To qualify, gluten-free items must be explicitly identified on store receipts (e.g., "GF," "G/F," "Free From," "Schar," "Kelkin").
 
-## Expanding the ESLint configuration
+However, the current process presents significant challenges:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Receipt Management:** Tracking and storing receipts for potential audits is cumbersome, often resulting in disorganized collections of hundreds of documents.
+- **Manual Calculations:** Users must individually calculate allowable expenses for each item and receipt at year-end. A labor-intensive and error-prone task.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+These inefficiencies create barriers to accessing financial benefits and complicate compliance with Revenue.ie requirements.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## **Solution**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The Gluten Tracker application addresses these challenges by providing a **streamlined, user-friendly platform** for managing gluten-free purchases. Key features include:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Interactive Dashboard:**  
+    Displays spending trends through visual graphs, covering total shopping expenses, gluten free purchases, and projected tax rebates (20% refund). Data is exportable for seamless tax filing.
+    
+- **Detailed Purchase Log:**  
+    A structured table captures essential purchase details, such as:
+    
+    - Date, store name, and location
+    - Gluten-free items and associated costs
+    - Total gluten-free spending per receipt
+    - Receipt total and a direct link to the digital receipt
+      
+- **Simplified Data Entry:**  
+    A dedicated interface supports uploads of receipts in PDF or image format, minimizing manual input and reducing errors.
+    
+- **Centralized Receipt Repository:**  
+    All uploaded receipts are stored in a single, accessible location, facilitating audits and reviews.
+    
+- **Revenue.ie Integration:**  
+    Direct links to Revenue’s medical expense claims page simplify the tax rebate submission process.
