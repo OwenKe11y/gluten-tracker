@@ -36,10 +36,10 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const FormGrid = styled(Grid)(() => ({
-  display: "flex",
-  flexDirection: "column",
-}));
+// const FormGrid = styled(Grid)(() => ({
+//   display: "flex",
+//   flexDirection: "column",
+// }));
 
 const ReceiptsCreateForm: FunctionComponent<ReceiptsCreateFormProps> = ({
   onSuccess,
